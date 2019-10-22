@@ -16,25 +16,44 @@
 //     [10,  9,  8, 7]]
 
 function matrix(n) {
-  let m = [];
+  let results = [];
   for (let i = 0; i < n; i++) {
-    let arr = new Array(n).fill(0);
-    m.push(arr);
+    results.push([]);
   }
   let startRow = 0;
   let startCol = 0;
   let endRow= n - 1;
   let endCol = n - 1;
-  let num = 1;
-  // first row
-  for (i = num; i < num + n; i++) {
-    m[startRow][num - 1] = num;
-    num += 1
+  let counter = 1;
+  while (startRow <= endRow && startCol <= endCol) {
+    // top row
+    for (let i = startCol; i <= endCol; i++) {
+      results[startRow][i] = counter;
+      counter++;
+    }
+    startRow++
+    // right col
+    for (let i = startRow; i <= endRow; i++) {
+      results[i][endCol] = counter;
+      counter++;
+    }
+    endCol--;
+    // bottom row
+    for (let i = endCol; i >= startCol; i--) {
+      results[endRow][i] = counter;
+      counter++;
+    }
+    endRow--;
+    // left col
+    for (let i = endRow; i >= startRow; i--) {
+      results[i][startCol] = counter;
+      counter++;
+    }
+    startCol++;
   }
-  // last endCol
-  for (i = num; i < num + n; i++)
+  return results;
 }
 
-matrix(3);
+console.log(matrix(3));
 
 module.exports = matrix;
